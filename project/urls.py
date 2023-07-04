@@ -1,5 +1,5 @@
 """
-URL configuration for tasks_project project.
+URL configuration for project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,10 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+
 from tasks import views
 
 urlpatterns = [
-    path('auth/', views.authorization),
-    path('cabinet/', views.cabinet),
-    path('new_task/', views.new_task),
+    path('auth/', views.auth),
+    path('cabinet/', views.TaskList.as_view(), name="cabinet"),
+    path('new_task/', views.TaskCreate.as_view()),
 ]
