@@ -5,13 +5,19 @@ from django.contrib.auth.models import User
 class Subsystem(models.Model):
     subsystem_name = models.CharField(max_length=30)
 
+    def __str__(self):
+        return f'{self.subsystem_name}'
+
 class MenuPoint(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT)
     current_subsystem = models.ForeignKey(Subsystem, null=False, blank=False, on_delete=models.PROTECT)
 
     menu_point_name = models.CharField(max_length=50)
     def get_full_path(self):
-        return self.parent.get_full_path() + [self.menu_point_name] if self.parent else [self.menu_point_name]
+        return f'{self.parent.get_full_path()}>{self.menu_point_name}' if self.parent else self.menu_point_name
+
+    def __str__(self):
+        return self.get_full_path()
 
 class Task(models.Model):
     class Status(models.TextChoices):
@@ -28,6 +34,9 @@ class Task(models.Model):
     date_create = models.DateTimeField(auto_now=True)
     def get_absolute_url(self):
         return reverse("cabinet")
+
+    def __str__(self):
+        return self.description[:50]
 
 
 

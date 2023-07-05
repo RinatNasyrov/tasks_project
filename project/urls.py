@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin',admin.site.urls),
     path('auth/', views.AuthView.as_view()),
     path('cabinet/', views.TaskList.as_view(), name="cabinet"),
-    path('new_task/', views.TaskCreate.as_view()),
+    path('new_task/', views.TaskCreate.as_view(), name='new_task'),
     path('<pk>/delete/',views.DeleteTaskView.as_view(), name='delete'),
     path('<pk>/update/',views.UpadateStatusView.as_view(), name='update')
 ]

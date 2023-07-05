@@ -9,8 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ["description", "current_status", "user_to"]
-    
+    fields = ["menu_point", "description", "current_status", "user_to"]
+    #form_class = TaskCreateForm
     def form_valid(self, form):
         form.instance.user_from = self.request.user
         return super().form_valid(form)
