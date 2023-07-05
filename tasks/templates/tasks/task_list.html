@@ -12,6 +12,7 @@
           {{ article.get_current_status_display }}
           От кого: {{ article.user_from }} Кому: {{ article.user_to }}
           <a href="{% url 'delete' article.id %}">Удалить</a>
+          <a href="{% url 'update' article.id %}">Изменить статус</a>
       </li>
         {% empty %}
       <li>No articles yet.</li>

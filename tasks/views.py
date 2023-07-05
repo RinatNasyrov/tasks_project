@@ -42,9 +42,20 @@ class DeleteTaskView(DeleteView):
         except Task.DoesNotExist:
             return HttpResponseForbidden()
 
-#class UpadateStatusView(UpdateView):
- #   model = Task
- #   fields = []
+class UpadateStatusView(UpdateView):
+    model = Task
+    fields = ["current_status"]
+    template_name_suffix = "_update_form"
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        user = request.user
+
+        try:
+            Task.objects.get(Q(Q(user_from=user) | Q(user_to=user)), pk=pk)
+            return super().post(request, *args, **kwargs)
+        except Task.DoesNotExist:
+            return HttpResponseForbidden()
 
 # Create your views here.
 def auth(request):

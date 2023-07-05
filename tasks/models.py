@@ -24,7 +24,7 @@ class Task(models.Model):
     menu_point = models.ForeignKey(MenuPoint, null=True, blank=True, on_delete=models.PROTECT, default=None)
 
     current_status = models.CharField(max_length=2, choices=Status.choices, default=Status.CREATED)
-    description= models.TextField()
+    description = models.TextField()
     date_create = models.DateTimeField(auto_now=True)
     def get_absolute_url(self):
         return reverse("cabinet")
