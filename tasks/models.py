@@ -6,9 +6,10 @@ class Subsystem(models.Model):
     subsystem_name = models.CharField(max_length=30)
 
 class MenuPoint(models.Model):
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT)
+    current_subsystem = models.ForeignKey(Subsystem, null=False, blank=False, on_delete=models.PROTECT)
+
     menu_point_name = models.CharField(max_length=50)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT())
-    current_subsystem = models.ForeignKey(Subsystem, null=False, blank=False, on_delete=models.PROTECT())
     def get_full_path(self):
         return self.parent.get_full_path() + [self.menu_point_name] if self.parent else [self.menu_point_name]
 
@@ -18,8 +19,8 @@ class Task(models.Model):
         REJECTED = "RJ", "Rejected"
         FINISHED = "FN", "Finished"
 
-    user_to = models.ForeignKey(User, null=False, blank=False, on_delete=models.PROTECT())
-    menu_point = models.ForeignKey(MenuPoint, null=False, blank=False, on_delete=models.PROTECT())
+    user_to = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, default=None)
+    menu_point = models.ForeignKey(MenuPoint, null=True, blank=True, on_delete=models.PROTECT, default=None)
 
     current_status = models.CharField(max_length=2, choices=Status.choices, default=Status.CREATED)
     description= models.TextField()

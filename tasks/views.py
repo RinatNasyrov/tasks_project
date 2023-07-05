@@ -7,7 +7,7 @@ from tasks.models import Task
 
 class TaskCreate(CreateView):
     model = Task
-    fields = ["title", "description"]
+    fields = ["description", "current_status"]
 
 class TaskList(ListView):
     model = Task

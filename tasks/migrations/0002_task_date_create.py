@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='task',
             name='date_create',
-            field=models.DateTimeField(auto_created=True, default=None, null=True),
+            field=models.DateTimeField(auto_created=True),
         ),
     ]
