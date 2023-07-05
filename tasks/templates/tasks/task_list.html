@@ -8,7 +8,11 @@
   <h1>Articles</h1>
     <ul>
       {% for article in object_list %}
-      <li>{{ article.description }} - {{ article.date_create }} - {{ article.get_current_status_display }}</li>
+      <li>{{ article.description }} - {{ article.date_create }} -
+          {{ article.get_current_status_display }}
+          От кого: {{ article.user_from }} Кому: {{ article.user_to }}
+          <a href="{% url 'delete' article.id %}">Удалить</a>
+      </li>
         {% empty %}
       <li>No articles yet.</li>
         {% endfor %}

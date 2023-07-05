@@ -19,7 +19,8 @@ class Task(models.Model):
         REJECTED = "RJ", "Rejected"
         FINISHED = "FN", "Finished"
 
-    user_to = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, default=None)
+    user_to = models.ForeignKey(User, null=True, blank=True, related_name="actor", on_delete=models.PROTECT, default=None)
+    user_from = models.ForeignKey(User, null=True, blank=True, related_name="creator", on_delete=models.PROTECT, default=None)
     menu_point = models.ForeignKey(MenuPoint, null=True, blank=True, on_delete=models.PROTECT, default=None)
 
     current_status = models.CharField(max_length=2, choices=Status.choices, default=Status.CREATED)
