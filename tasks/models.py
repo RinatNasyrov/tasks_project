@@ -9,18 +9,15 @@ class Subsystem(models.Model):
         return f'{self.subsystem_name}'
 
 class MenuPoint(models.Model):
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT, related_name='child')
     current_subsystem = models.ForeignKey(Subsystem, null=False, blank=False, on_delete=models.PROTECT)
 
     menu_point_name = models.CharField(max_length=50)
     def get_full_path(self):
         return f'{self.parent.get_full_path()}>{self.menu_point_name}' if self.parent else self.menu_point_name
 
-    def full_path_str(self):
-        return self.get_full_path()
-
     def __str__(self):
-        return self.menu_point_name
+        return self.get_full_path()
 
 class Task(models.Model):
     class Status(models.TextChoices):

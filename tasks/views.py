@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
+
+from tasks.forms import TaskCreateModelForm
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -14,8 +16,7 @@ class LocalLoginRequiredMixin(LoginRequiredMixin):
 
 class TaskCreate(LocalLoginRequiredMixin, CreateView):
     model = Task
-    fields = ["menu_point", "description", "current_status", "user_to"]
-    #form_class = TaskCreateForm
+    form_class = TaskCreateModelForm
     def form_valid(self, form):
         form.instance.user_from = self.request.user
         return super().form_valid(form)
@@ -25,7 +26,9 @@ class TaskList(LocalLoginRequiredMixin, ListView):
 
     def get_queryset(self):
         query_set = super().get_queryset()
-        query_set = query_set.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user))
+        query_set = query_set.filter(
+            Q(user_to=self.request.user) | Q(user_from=self.request.user)
+        )
         return query_set
 
 class AuthView(LoginView):
