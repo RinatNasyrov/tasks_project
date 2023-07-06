@@ -8,7 +8,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TaskCreate(LoginRequiredMixin, CreateView):
+
+class LocalLoinRequiredMixin(LoginRequiredMixin):
+    login_url = '/auth/'
+
+class TaskCreate(LocalLoinRequiredMixin, CreateView):
     model = Task
     fields = ["menu_point", "description", "current_status", "user_to"]
     #form_class = TaskCreateForm
@@ -17,7 +21,9 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskList(ListView):
+
+
+class TaskList(LocalLoinRequiredMixin, ListView):
     model = Task
 
 class AuthView(LoginView):
@@ -29,7 +35,7 @@ class AuthView(LoginView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
-class DeleteTaskView(DeleteView):
+class DeleteTaskView(LocalLoinRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy('cabinet')
 
@@ -43,7 +49,7 @@ class DeleteTaskView(DeleteView):
         except Task.DoesNotExist:
             return HttpResponseForbidden()
 
-class UpadateStatusView(UpdateView):
+class UpadateStatusView(LocalLoinRequiredMixin, UpdateView):
     model = Task
     fields = ["current_status"]
     template_name_suffix = "_update_form"
