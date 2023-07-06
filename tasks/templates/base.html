@@ -5,28 +5,47 @@
     <title>{% block title %}Title{% endblock title %}</title>
     <style>
         *{ font-family: "Comic Sans MS", "Comic Sans", cursive; }
-        p { margin: 0.5em }
-        li { margin: 1em; }
+        p { margin: 0.3em }
+        li {
+                margin: 1em;
+                background: #ffffff;
+                list-style-type: none;
+                width:750px;
+                padding: 2em;
+                border-radius: 2em;
+            }
         a,input[type=submit]{
                 width: 115px;
                 display: inline;
                 background: #158bcd;
-                border-radius: 5px;
+                border-radius: 0.5em;
                 color: white;
                 font-weight: bold;
                 line-height: 25px;
                 text-align: center;
-                padding: 5px;
+                padding-left: 1em;
+                padding-right: 1em;
+                padding-top:0.2em;
+                padding-bottom:0.2em;
                 text-decoration: none;
-                /*margin: 1em;*/
         }
         a { height: 25px; }
         input[type=submit] { border:none; }
 
-body {
-max-width: max-content;
-margin: auto;
-}
+        /*div {
+                margin: 1em;
+                background: #000000;
+                list-style-type: none;
+                width:750px;
+                padding: 2em;
+                border-radius: 2em;
+        }*/
+
+        body {
+            max-width: max-content;
+            margin: auto;
+            background: #fbdfb1;
+        }
     </style>
 </head>
 <body>
