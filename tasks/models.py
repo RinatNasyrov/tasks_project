@@ -16,8 +16,11 @@ class MenuPoint(models.Model):
     def get_full_path(self):
         return f'{self.parent.get_full_path()}>{self.menu_point_name}' if self.parent else self.menu_point_name
 
-    def __str__(self):
+    def full_path_str(self):
         return self.get_full_path()
+
+    def __str__(self):
+        return self.menu_point_name
 
 class Task(models.Model):
     class Status(models.TextChoices):

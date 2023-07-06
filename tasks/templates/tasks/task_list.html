@@ -8,7 +8,7 @@
       {% for article in object_list %}
       <li>
           <p>От кого: {{ article.user_from }} Кому: {{ article.user_to }}</p>
-          <p>Маршрут: {{ article.menu_point }}</p>
+          <p>Маршрут: {{ article.menu_point.full_path_str }}</p>
           <p>Описание: {{ article.description }}</p>
           <p>Дата создания: {{ article.date_create }}</p>
           <p>Статус: {{ article.get_current_status_display }}</p>
