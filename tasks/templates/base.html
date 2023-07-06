@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Title{% endblock title %}</title>
+    <style>
+        *{ font-family: "Comic Sans MS", "Comic Sans", cursive; }
+        p { margin: 0.5em }
+        li { margin: 1em; }
+        a,input[type=submit]{
+                width: 115px;
+                display: inline;
+                background: #158bcd;
+                border-radius: 5px;
+                color: white;
+                font-weight: bold;
+                line-height: 25px;
+                text-align: center;
+                padding: 5px;
+                text-decoration: none;
+                /*margin: 1em;*/
+        }
+        a { height: 25px; }
+        input[type=submit] { border:none; }
+
+body {
+max-width: max-content;
+margin: auto;
+}
+    </style>
+</head>
+<body>
+<h1>{% block header %}{% endblock header %}</h1>
+<div>{% block content %}{% endblock content %}</div>
+</body>
+</html>

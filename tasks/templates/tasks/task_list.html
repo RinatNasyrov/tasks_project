@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  <h1>Articles</h1>
-  <a href="{% url 'new_task' %}">Новое задание</a>
+{% extends "base.html" %}
+{% block title %}Кабинет{% endblock title %}
+{% block header %}Кабинет{% endblock header %}
+{% block content %}
+    <a href="{% url 'new_task' %}">Новое задание</a>
     <ul>
       {% for article in object_list %}
-      <li>{{ article.menu_point }} -
-          {{ article.description }} - {{ article.date_create }} -
-          {{ article.get_current_status_display }}
-          От кого: {{ article.user_from }} Кому: {{ article.user_to }}
+      <li>
+          <p>От кого: {{ article.user_from }} Кому: {{ article.user_to }}</p>
+          <p>Маршрут: {{ article.menu_point }}</p>
+          <p>Описание: {{ article.description }}</p>
+          <p>Дата создания: {{ article.date_create }}</p>
+          <p>Статус: {{ article.get_current_status_display }}</p>
+
+          <p>
           <a href="{% url 'delete' article.id %}">Удалить</a>
           <a href="{% url 'update' article.id %}">Изменить статус</a>
+          </p>
       </li>
         {% empty %}
       <li>No articles yet.</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock content %}
