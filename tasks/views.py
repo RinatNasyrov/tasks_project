@@ -9,10 +9,10 @@ from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class LocalLoinRequiredMixin(LoginRequiredMixin):
-    login_url = '/auth/'
+class LocalLoginRequiredMixin(LoginRequiredMixin):
+    login_url = 'auth'
 
-class TaskCreate(LocalLoinRequiredMixin, CreateView):
+class TaskCreate(LocalLoginRequiredMixin, CreateView):
     model = Task
     fields = ["menu_point", "description", "current_status", "user_to"]
     #form_class = TaskCreateForm
@@ -20,11 +20,13 @@ class TaskCreate(LocalLoinRequiredMixin, CreateView):
         form.instance.user_from = self.request.user
         return super().form_valid(form)
 
-
-
-
-class TaskList(LocalLoinRequiredMixin, ListView):
+class TaskList(LocalLoginRequiredMixin, ListView):
     model = Task
+
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        query_set = query_set.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user))
+        return query_set
 
 class AuthView(LoginView):
     redirect_authenticated_user = True
@@ -35,7 +37,7 @@ class AuthView(LoginView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
-class DeleteTaskView(LocalLoinRequiredMixin, DeleteView):
+class DeleteTaskView(LocalLoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy('cabinet')
 
@@ -49,7 +51,7 @@ class DeleteTaskView(LocalLoinRequiredMixin, DeleteView):
         except Task.DoesNotExist:
             return HttpResponseForbidden()
 
-class UpadateStatusView(LocalLoinRequiredMixin, UpdateView):
+class UpadateStatusView(LocalLoginRequiredMixin, UpdateView):
     model = Task
     fields = ["current_status"]
     template_name_suffix = "_update_form"
