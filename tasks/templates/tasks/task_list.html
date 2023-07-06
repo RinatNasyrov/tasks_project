@@ -3,6 +3,7 @@
 {% block header %}Кабинет{% endblock header %}
 {% block content %}
     <a href="{% url 'new_task' %}">Новое задание</a>
+    <a href="{% url 'logout' %}">Выйти</a>
     <ul>
       {% for article in object_list %}
       <li>

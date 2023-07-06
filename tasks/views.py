@@ -1,9 +1,10 @@
+from django.contrib.auth import logout
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -60,6 +61,10 @@ class UpadateStatusView(UpdateView):
 # Create your views here.
 def auth(request):
     return render(request,"Auth.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect('auth')
 
 def cabinet(request):
     return HttpResponse('cabinet')

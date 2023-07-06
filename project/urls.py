@@ -20,7 +20,8 @@ from tasks import views
 
 urlpatterns = [
     path('admin',admin.site.urls),
-    path('auth/', views.AuthView.as_view()),
+    path('auth/', views.AuthView.as_view(), name='auth'),
+    path('logout/', views.logout_view, name='logout'),
     path('cabinet/', views.TaskList.as_view(), name="cabinet"),
     path('new_task/', views.TaskCreate.as_view(), name='new_task'),
     path('<pk>/delete/',views.DeleteTaskView.as_view(), name='delete'),
