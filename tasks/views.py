@@ -1,11 +1,12 @@
+from datetime import timezone
+
 from django.contrib.auth import logout
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
-from django.contrib.auth.views import LoginView, LogoutView
-
+from django.contrib.auth.views import LoginView
 from tasks.forms import TaskCreateModelForm
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,12 +24,13 @@ class TaskCreate(LocalLoginRequiredMixin, CreateView):
 
 class TaskList(LocalLoginRequiredMixin, ListView):
     model = Task
-
+    def get_context_data(self, *, object_list=None, **kwargs):
+        res = super().get_context_data(object_list=None, **kwargs)
+        res.update({"user_name": self.request.user.username})
+        return res
     def get_queryset(self):
         query_set = super().get_queryset()
-        query_set = query_set.filter(
-            Q(user_to=self.request.user) | Q(user_from=self.request.user)
-        )
+        query_set = query_set.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user)).order_by('-date_create')
         return query_set
 
 class AuthView(LoginView):
@@ -58,7 +60,6 @@ class UpadateStatusView(LocalLoginRequiredMixin, UpdateView):
     model = Task
     fields = ["current_status"]
     template_name_suffix = "_update_form"
-
     def post(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
         user = request.user

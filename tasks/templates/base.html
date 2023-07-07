@@ -6,11 +6,14 @@
     <style>
         *{ font-family: "Comic Sans MS", "Comic Sans", cursive; }
         p { margin: 0.3em }
+        ul { padding: 0em }
         li {
-                margin: 1em;
+                margin-left: 0em;
+                margin-right: 0em;
+                margin-top: 1em;
                 background: #ffffff;
                 list-style-type: none;
-                width:750px;
+                width:45em;
                 padding: 2em;
                 border-radius: 2em;
             }
@@ -32,15 +35,6 @@
         a { height: 25px; }
         input[type=submit] { border:none; }
 
-        /*div {
-                margin: 1em;
-                background: #000000;
-                list-style-type: none;
-                width:750px;
-                padding: 2em;
-                border-radius: 2em;
-        }*/
-
         body {
             max-width: max-content;
             margin: auto;
@@ -49,7 +43,7 @@
     </style>
 </head>
 <body>
-<h1>{% block header %}{% endblock header %}</h1>
+<h1 align="center">{% block header %}{% endblock header %}</h1>
 <div>{% block content %}{% endblock content %}</div>
 </body>
 </html>

@@ -2,13 +2,17 @@
 {% block title %}Кабинет{% endblock title %}
 {% block header %}Кабинет{% endblock header %}
 {% block content %}
+    <h4 align="right">
+    Вы вошли как: {{ user_name }}
+    <a href="{% url 'logout' %}" align="right">Выйти</a>
+    </h4>
+    <br>
     <a href="{% url 'new_task' %}">Новое задание</a>
-    <a href="{% url 'logout' %}">Выйти</a>
     <ul>
       {% for article in object_list %}
       <li>
           <p>От кого: {{ article.user_from }} Кому: {{ article.user_to }}</p>
-          <p>Маршрут: {{ article.menu_point.full_path_str }}</p>
+          <p>Маршрут: {{ article.menu_point }}</p>
           <p>Описание: {{ article.description }}</p>
           <p>Дата создания: {{ article.date_create }}</p>
           <p>Статус: {{ article.get_current_status_display }}</p>
