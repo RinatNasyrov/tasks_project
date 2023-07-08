@@ -7,6 +7,8 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from django.contrib.auth.views import LoginView
+
+from tasks.filters import TaskFilter
 from tasks.forms import TaskCreateModelForm
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,15 +25,17 @@ class TaskCreate(LocalLoginRequiredMixin, CreateView):
 
 class TaskList(LocalLoginRequiredMixin, ListView):
     model = Task
-
+    queryset = Task.objects.all()
     def get_context_data(self, *, object_list=None, **kwargs):
         res = super().get_context_data(object_list=None, **kwargs)
         res.update({"user_name": self.request.user.username})
+        res['form']=self.filterset.form
         return res
     def get_queryset(self):
-        query_set = super().get_queryset()
-        query_set = query_set.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user)).order_by('-date_create')
-        return query_set
+        queryset = super().get_queryset()
+        queryset = queryset.filter(Q(user_to=self.request.user) | Q(user_from=self.request.user)).order_by('-date_create')
+        self.filterset = TaskFilter(self.request.GET,queryset=queryset)
+        return self.filterset.qs
 
 class AuthView(LoginView):
     redirect_authenticated_user = True

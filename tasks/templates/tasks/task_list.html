@@ -4,10 +4,14 @@
 {% block content %}
     <h4 align="right">
     Вы вошли как: {{ user_name }}
-    <a href="{% url 'logout' %}" align="right">Выйти</a>
+    <a href="{% url 'logout' %}">Выйти</a>
     </h4>
     <br>
     <a href="{% url 'new_task' %}">Новое задание</a>
+    <form align="right" method="GET" action="{% url 'cabinet' %}">
+        {{ form.as_p }}
+        <input type="submit" value="Выбрать">
+    </form>
     <ul>
       {% for article in object_list %}
       <li>
