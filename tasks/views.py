@@ -11,7 +11,6 @@ from tasks.forms import TaskCreateModelForm
 from tasks.models import Task
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
 class LocalLoginRequiredMixin(LoginRequiredMixin):
     login_url = 'auth'
 
@@ -24,6 +23,7 @@ class TaskCreate(LocalLoginRequiredMixin, CreateView):
 
 class TaskList(LocalLoginRequiredMixin, ListView):
     model = Task
+
     def get_context_data(self, *, object_list=None, **kwargs):
         res = super().get_context_data(object_list=None, **kwargs)
         res.update({"user_name": self.request.user.username})
