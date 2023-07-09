@@ -20,12 +20,12 @@ class Task(models.Model):
         FINISHED = "FN", "Завершено"
 
     user_to = models.ForeignKey(User, verbose_name='Кому', null=True, blank=True, related_name="actor", on_delete=models.PROTECT, default=None)
-    user_from = models.ForeignKey(User, null=True, blank=True, related_name="creator", on_delete=models.PROTECT, default=None)
+    user_from = models.ForeignKey(User, null=True, verbose_name='От кого', blank=True, related_name="creator", on_delete=models.PROTECT, default=None)
     menu_point = models.ForeignKey(MenuPoint, null=True, blank=True, on_delete=models.PROTECT, default=None)
 
     current_status = models.CharField(max_length=2, verbose_name='Статус', choices=Status.choices, default=Status.CREATED)
     description = models.TextField(verbose_name='Описание')
-    date_create = models.DateTimeField(auto_now=True)
+    date_create = models.DateTimeField(auto_now_add=True)
     def get_absolute_url(self):
         return reverse("cabinet")
 
